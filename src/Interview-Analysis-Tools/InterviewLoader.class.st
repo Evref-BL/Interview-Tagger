@@ -123,7 +123,7 @@ InterviewLoader >> createRequestContentForSetence: anITWSentence withTopic: anIT
 
 { #category : 'export' }
 InterviewLoader >> exportToCSV [
-	|associations header export|
+	|associations header export csv csvFile|
 	associations := self buildAssociationsMatrice.
 	
 	header := ('index, sentence, ') , (', ' join: ((model allWithType: ITWTheme) collect: #name)) .
@@ -135,7 +135,14 @@ InterviewLoader >> exportToCSV [
 		output := (', ' join: entry values). 
 		 ]).	
 
-	^ String cr join: export
+	csv := String cr join: export.
+	
+	
+	csvFile := (interview file parent / (interview file basenameWithoutExtension ,'.csv')) asFileReference.
+
+	csvFile writeStreamDo: [ :aStream |
+			 aStream << csv ].
+	^csvFile
 ]
 
 { #category : 'initialization' }
