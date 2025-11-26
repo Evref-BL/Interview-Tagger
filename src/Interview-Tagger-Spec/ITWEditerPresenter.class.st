@@ -30,7 +30,6 @@ ITWEditerPresenter >> initializePresenters [
 			 title: 'Sentence'
 			 evaluated: [ :line | line content ]).
 
-
 	table addColumn: (SpStringTableColumn new
 			 title: 'Yes';
 			 evaluated: [ :line | '; ' join: (line yeses collect: #name) ]).
@@ -41,7 +40,8 @@ ITWEditerPresenter >> initializePresenters [
 			 title: 'Unknow';
 			 evaluated: [ :line | '; ' join: (line unknowns collect: #name) ]).
 
-
 	table items: self model sentences.
-	table beResizable
+	table beResizable.
+	
+	table whenActivatedDo: [ :item |(ITWThemeSentenceEditerPresenter on: item selectedItem) open ].
 ]
