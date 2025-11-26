@@ -98,3 +98,8 @@ ITWModelMock >> interview1 [
 ITWModelMock >> model [ 
 	^ model
 ]
+
+{ #category : 'accessing' }
+ITWModelMock >> sentence1 [
+	^ self interview1 sentences first
+]
