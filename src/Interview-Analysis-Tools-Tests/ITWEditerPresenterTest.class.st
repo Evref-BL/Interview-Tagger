@@ -12,7 +12,7 @@ Class {
 ITWEditerPresenterTest >> testPresenter [
 
 	|presenter|
-	presenter := ITWEditerPresenter on: ITWModelMock new interview1.
+	presenter := ITWInterviewPresenter on: ITWModelMock new interview1.
 	
 	presenter open
 ]

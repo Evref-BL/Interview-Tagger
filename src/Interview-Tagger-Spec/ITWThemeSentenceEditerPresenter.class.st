@@ -7,7 +7,8 @@ Class {
 		'sentence',
 		'yesBox',
 		'noBox',
-		'unknownBox'
+		'unknownBox',
+		'whenThemeChanged'
 	],
 	#category : 'Interview-Tagger-Spec',
 	#package : 'Interview-Tagger-Spec'
@@ -28,37 +29,37 @@ ITWThemeSentenceEditerPresenter >> initializePresenters [
 
 
 	title :=  self newLabel label: 'Drag and drop the themes to the correct relation'. 
-	sentence := self newLink label: self model content; action: [self model inspect].
+	sentence := self newLink label: 'unselected sentences'; action: [self model inspect].
 	
 	
 	yesBox := self newEasyListView
 		headerTitle: 'YES';
-		items:  self model yeses;
+		items:  {};
 		display: [ :item | item name ];
 		dragEnabled: true;
 		dropEnabled: true;
 	   acceptDrop: [ :transfer | 
 			self model setToYesTheme: transfer passenger. 
-			self refreshBox.
-			];
+			self refreshBox.];
 		whenDragStartDo: [ :ann | 
 			ann transfer description: ('Passing "{1}" element' format: ann transfer passenger) ].
 	
 	noBox := self newEasyListView
 		headerTitle: 'NO';
-		items:  self model nos;
+		items:  {};
 		display: [ :item | item name ];
 		dragEnabled: true;
 		dropEnabled: true;
 		acceptDrop: [ :transfer | 
 			self model setToNoTheme: transfer passenger. 
-			self refreshBox.];
+			self refreshBox.
+			];
 		whenDragStartDo: [ :ann | 
 			ann transfer description: ('Passing "{1}" element' format: ann transfer passenger) ].
 		
 	unknownBox := self newEasyListView
 		headerTitle: 'UNKNOWN';
-		items:  self model unknowns;
+		items:  {};
 		display: [ :item | item name ];
 		dragEnabled: true;
 		dropEnabled: true;
@@ -71,9 +72,27 @@ ITWThemeSentenceEditerPresenter >> initializePresenters [
 
 ]
 
+{ #category : 'initialization' }
+ITWThemeSentenceEditerPresenter >> modelChanged [ 
+
+self model ifNotNil: [ 
+	sentence label: self model content.
+	self refreshBox .
+	 ] 
+	
+	
+]
+
 { #category : 'as yet unclassified' }
 ITWThemeSentenceEditerPresenter >> refreshBox [
 	yesBox items: self model yeses. 
 	noBox items: self model nos . 
 	unknownBox items: self model unknowns. 
+	whenThemeChanged value. 
+]
+
+{ #category : 'when' }
+ITWThemeSentenceEditerPresenter >> whenThemeChangedDo: aFullBlockClosure [ 
+	
+	whenThemeChanged:= aFullBlockClosure
 ]
