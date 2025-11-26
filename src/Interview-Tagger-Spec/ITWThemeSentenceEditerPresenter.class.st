@@ -7,7 +7,7 @@ Class {
 		'sentence',
 		'yesBox',
 		'noBox',
-		'unknowBox'
+		'unknownBox'
 	],
 	#category : 'Interview-Tagger-Spec',
 	#package : 'Interview-Tagger-Spec'
@@ -17,8 +17,9 @@ Class {
 ITWThemeSentenceEditerPresenter >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom 
-		add: #title; 
-		add: #sentence; 
+		add: #title withConstraints: [:constraints | constraints height: self class labelHeight ]; 
+		add: #sentence withConstraints: [:constraints | constraints height: self class labelHeight ]; 
+
 		add: (SpBoxLayout newLeftToRight add: #yesBox; add: #noBox; add: #unknownBox; yourself); yourself
 ]
 
@@ -26,13 +27,53 @@ ITWThemeSentenceEditerPresenter >> defaultLayout [
 ITWThemeSentenceEditerPresenter >> initializePresenters [
 
 
-	
 	title :=  self newLabel label: 'Drag and drop the themes to the correct relation'. 
-	sentence := self newLabel label: self model content.
+	sentence := self newLink label: self model content; action: [self model inspect].
 	
-	yesBox := ''.
-	noBox := ''.
-	unknowBox := ''.
+	
+	yesBox := self newEasyListView
+		headerTitle: 'YES';
+		items:  self model yeses;
+		display: [ :item | item name ];
+		dragEnabled: true;
+		dropEnabled: true;
+	   acceptDrop: [ :transfer | 
+			self model setToYesTheme: transfer passenger. 
+			self refreshBox.
+			];
+		whenDragStartDo: [ :ann | 
+			ann transfer description: ('Passing "{1}" element' format: ann transfer passenger) ].
+	
+	noBox := self newEasyListView
+		headerTitle: 'NO';
+		items:  self model nos;
+		display: [ :item | item name ];
+		dragEnabled: true;
+		dropEnabled: true;
+		acceptDrop: [ :transfer | 
+			self model setToNoTheme: transfer passenger. 
+			self refreshBox.];
+		whenDragStartDo: [ :ann | 
+			ann transfer description: ('Passing "{1}" element' format: ann transfer passenger) ].
+		
+	unknownBox := self newEasyListView
+		headerTitle: 'UNKNOWN';
+		items:  self model unknowns;
+		display: [ :item | item name ];
+		dragEnabled: true;
+		dropEnabled: true;
+		acceptDrop: [ :transfer | 
+			self model setToUnknownTheme: transfer passenger. 
+			self refreshBox.];
+		whenDragStartDo: [ :ann | 
+			ann transfer description: ('Passing "{1}" element' format: ann transfer passenger) ]..
 
 
+]
+
+{ #category : 'as yet unclassified' }
+ITWThemeSentenceEditerPresenter >> refreshBox [
+	yesBox items: self model yeses. 
+	noBox items: self model nos . 
+	unknownBox items: self model unknowns. 
 ]

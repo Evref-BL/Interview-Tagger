@@ -10,5 +10,5 @@ Class {
 
 { #category : 'tests' }
 ITWThemeSentenceEditerPresenterTest >> testPresenter [
-	ITWThemeSentenceEditerPresenter on:( ITWModelMock new sentence1)
+	(ITWThemeSentenceEditerPresenter on:( ITWModelMock new sentence1)) open
 ]
