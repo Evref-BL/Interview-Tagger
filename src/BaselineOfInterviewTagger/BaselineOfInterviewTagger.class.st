@@ -29,8 +29,9 @@ BaselineOfInterviewTagger >> defineGroups: spec [
 
 { #category : 'baselines' }
 BaselineOfInterviewTagger >> definePackages: spec [
-
+	
 	spec
+		package: 'Interview-Analysis-Tools' with: [ spec requires: #( 'Moose-Collection-Extension' ) ];
 		package: 'Interview-Tagger-Spec' with: [ spec requires: #( 'Interview-Tagger-Model' ) ];
 		package: 'Interview-Tagger-Model-Extension' with: [ spec requires: #( 'Interview-Tagger-Model' ) ];
 		package: 'Interview-Tagger-Model';
