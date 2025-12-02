@@ -158,7 +158,7 @@ llmApi := LLMAPI chat
 InterviewLoader >> interview: anITWInterview [
 
 	interview := anITWInterview.
-	text := interview file contents . 
+	text := String cr join: interview sentences. 
 ]
 
 { #category : 'matcher' }
