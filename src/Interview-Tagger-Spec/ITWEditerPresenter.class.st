@@ -28,6 +28,7 @@ ITWEditerPresenter >> defaultLayout [
 { #category : 'initialization' }
 ITWEditerPresenter >> initializePresenters [ 
 	
+	
 	interviewPresenter := ITWInterviewPresenter on: self model.
 
 	themeSentencePresenter := ITWThemeSentenceEditerPresenter new. 
