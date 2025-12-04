@@ -11,5 +11,9 @@ Class {
 { #category : 'tests' }
 InterviewLoaderTest >> testTopicPromptFrom [
 
-	self assert: (InterviewLoader new topicPromptFrom: { ITWTheme new name: 'T1' .  ITWTheme new name: 'T1'  }) equals: '<TOPIC>T1, T1</TOPIC>'
+	self
+		assert: (InterviewLoader new topicPromptFrom: {
+					 (ITWTheme new name: 'T1').
+					 (ITWTheme new name: 'T2') })
+		equals: '<TOPIC>T1; T2</TOPIC>'
 ]
