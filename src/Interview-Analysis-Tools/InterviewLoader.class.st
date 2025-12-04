@@ -24,7 +24,15 @@ InterviewLoader >> buildAssociationsMatrice [
 	| dic |
 	
 	dic := OrderedDictionary new.
-	interview associations do: [ :anAssoc |
+	
+	interview sentences do: [ :sentence |
+		dic at: sentence index put: (({
+					(#index -> sentence index).
+					(#sentence -> ( sentence printString reject: [ :c | c = $, ])). }
+					asOrderedDictionary),  (sentence collectDicThemesRelations))
+		 ].
+	
+	"interview associations do: [ :anAssoc |
 		dic
 			at: anAssoc sentence index
 			ifPresent: [ :matchings |
@@ -35,7 +43,8 @@ InterviewLoader >> buildAssociationsMatrice [
 					(#sentence
 					 -> (anAssoc sentence printString reject: [ :c | c = $, ])).
 					(anAssoc topic name asSymbol -> anAssoc matching) }
-					asOrderedDictionary ] ].
+					asOrderedDictionary ] ]."
+			
 	^ dic
 ]
 
@@ -126,7 +135,7 @@ InterviewLoader >> exportToCSV [
 	|associations header export csv csvFile|
 	associations := self buildAssociationsMatrice.
 	
-	header := ('index, sentence, ') , (', ' join: ((model allWithType: ITWTheme) collect: #name)) .
+	header := ('index, sentence, ') , (', ' join: model collectThemeNames ) .
 	export := OrderedCollection new add: header; yourself. 
 	
 	

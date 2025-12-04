@@ -100,6 +100,23 @@ ITWSentence >> addYese: anObject [
 	^ self yeses add: anObject
 ]
 
+{ #category : 'as yet unclassified' }
+ITWSentence >> collectDicThemesRelations [
+
+	| dic |
+	dic := OrderedDictionary new.
+	self mooseModel collectThemeNames do: [ :name |
+		dic at: name put: nil.
+		 ].
+
+	self yeses do: [ :theme | dic at: theme name asSymbol put: #yes ].
+	self nos do: [ :theme | dic at: theme name asSymbol put: #no ].
+	self unknowns do: [ :theme |
+		dic at: theme name asSymbol put: #unknown ].
+	 
+	^ dic
+]
+
 { #category : 'accessing' }
 ITWSentence >> content [
 
