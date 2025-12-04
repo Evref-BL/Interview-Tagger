@@ -35,7 +35,9 @@ ITWModelImporter >> fromCSVContents: aString [
 	themeArray := data first allButFirst allButFirst.
 
 	themeArray := themeArray collect: [ :themeName |
-		              model newTheme name: themeName trim ].
+						|theme|
+						theme := ITWTheme new name: themeName trim. 
+		             model add: theme unless: [ :x :y | x name = y name ] ].
 
 	index := 0.
 	sentences := data allButFirst collect: [ :aLine |

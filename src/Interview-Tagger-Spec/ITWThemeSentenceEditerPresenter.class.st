@@ -27,49 +27,54 @@ ITWThemeSentenceEditerPresenter >> defaultLayout [
 { #category : 'as yet unclassified' }
 ITWThemeSentenceEditerPresenter >> initializePresenters [
 
+	title := self newLabel label:
+		         'Drag and drop the themes to the correct relation'.
+	
+	sentence := self newLink
+		            label: 'unselected sentences';
+		            action: [ self model inspect ].
 
-	title :=  self newLabel label: 'Drag and drop the themes to the correct relation'. 
-	sentence := self newLink label: 'unselected sentences'; action: [self model inspect].
-	
-	
+
 	yesBox := self newEasyListView
-		headerTitle: 'YES';
-		items:  {};
-		display: [ :item | item name ];
-		dragEnabled: true;
-		dropEnabled: true;
-	   acceptDrop: [ :transfer | 
-			self model setToYesTheme: transfer passenger. 
-			self refreshBox.];
-		whenDragStartDo: [ :ann | 
-			ann transfer description: ('Passing "{1}" element' format: ann transfer passenger) ].
-	
+		          headerTitle: 'YES';
+		          items: {  };
+		          display: [ :item | item name ];
+		          dragEnabled: true;
+		          dropEnabled: true;
+		          acceptDrop: [ :transfer |
+				          self model setToYesTheme: transfer passenger.
+				          self refreshBox ];
+		          whenDragStartDo: [ :ann |
+				          ann transfer description:
+						          ('Passing "{1}" element' format:
+								           ann transfer passenger) ].
+
 	noBox := self newEasyListView
-		headerTitle: 'NO';
-		items:  {};
-		display: [ :item | item name ];
-		dragEnabled: true;
-		dropEnabled: true;
-		acceptDrop: [ :transfer | 
-			self model setToNoTheme: transfer passenger. 
-			self refreshBox.
-			];
-		whenDragStartDo: [ :ann | 
-			ann transfer description: ('Passing "{1}" element' format: ann transfer passenger) ].
-		
+		         headerTitle: 'NO';
+		         items: {  };
+		         display: [ :item | item name ];
+		         dragEnabled: true;
+		         dropEnabled: true;
+		         acceptDrop: [ :transfer |
+				         self model setToNoTheme: transfer passenger.
+				         self refreshBox ];
+		         whenDragStartDo: [ :ann |
+				         ann transfer description:
+						         ('Passing "{1}" element' format: ann transfer passenger) ].
+
 	unknownBox := self newEasyListView
-		headerTitle: 'UNKNOWN';
-		items:  {};
-		display: [ :item | item name ];
-		dragEnabled: true;
-		dropEnabled: true;
-		acceptDrop: [ :transfer | 
-			self model setToUnknownTheme: transfer passenger. 
-			self refreshBox.];
-		whenDragStartDo: [ :ann | 
-			ann transfer description: ('Passing "{1}" element' format: ann transfer passenger) ]..
-
-
+		              headerTitle: 'UNKNOWN';
+		              items: {  };
+		              display: [ :item | item name ];
+		              dragEnabled: true;
+		              dropEnabled: true;
+		              acceptDrop: [ :transfer |
+				              self model setToUnknownTheme: transfer passenger.
+				              self refreshBox ];
+		              whenDragStartDo: [ :ann |
+				              ann transfer description:
+						              ('Passing "{1}" element' format:
+								               ann transfer passenger) ]
 ]
 
 { #category : 'initialization' }

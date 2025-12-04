@@ -34,7 +34,9 @@ ITWImporter >> importSentenceFromLine: line withIndex: index [
 		actor := ITWInterviewer new name: actorTag allButLast allButFirst ].
 	actorTag = '[DEV]' ifTrue: [
 		actor := ITWDevelopper new name: actorTag allButLast allButFirst ].
-	actor := model add: actor unless: [ :x :y | x name = y name ].
+	
+	actor := (model allWithSubTypesOf: ITWActor) detect: [ :x | x name = actor name ] ifNone: [ model add: actor ] .
+	
 	sentence := model newSentence.
 	^ sentence
 		  content: (line copyFrom: (line indexOf: $]) + 1 to: line size);

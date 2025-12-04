@@ -106,14 +106,13 @@ ITWSentence >> collectDicThemesRelations [
 	| dic |
 	dic := OrderedDictionary new.
 	self mooseModel collectThemeNames do: [ :name |
-		dic at: name put: nil.
-		 ].
+		dic at: name asSymbol put: #unknown ].
 
 	self yeses do: [ :theme | dic at: theme name asSymbol put: #yes ].
 	self nos do: [ :theme | dic at: theme name asSymbol put: #no ].
 	self unknowns do: [ :theme |
 		dic at: theme name asSymbol put: #unknown ].
-	 
+
 	^ dic
 ]
 
